@@ -154,7 +154,7 @@ public class RentACatIntegrationTest {
 			assertEquals(2, returnedCat.getId());
 		}
 		catch (Exception e) {
-			fail("Exception should be thrown");
+			fail();
 		}
 	}
 
