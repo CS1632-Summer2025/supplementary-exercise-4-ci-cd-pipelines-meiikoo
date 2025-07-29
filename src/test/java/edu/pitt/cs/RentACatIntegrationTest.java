@@ -106,7 +106,7 @@ public class RentACatIntegrationTest {
 	 * the class object of r instead of hardcoding it as RentACatImpl.
 	 */
 	@Test
-	public void testGetCatNullNumCats0() {
+	public void testGetCatNullNumCats0() throws Exception {
 		// TODO: Fill in
 		
 		Class<?> r1 = r.getClass();
@@ -118,7 +118,7 @@ public class RentACatIntegrationTest {
 			assertEquals("Invalid cat ID." + newline, out.toString());
 		}
 		catch (Exception e) {
-			System.err.println("Failure.");
+			fail();
 		}
 	}
 
