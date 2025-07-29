@@ -2,6 +2,7 @@ package edu.pitt.cs;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.junit.After;
@@ -42,37 +43,47 @@ public class RentACatIntegrationTest {
 	public void setUp() throws Exception {
 		// INITIALIZE THE TEST FIXTURE
 
-		// 1. Create a new RentACat object and assign to r using a call to RentACat.createInstance(InstanceType).
-		// Passing InstanceType.IMPL as the first parameter will create a real RentACat object using your RentACatImpl implementation.
-		// Passing InstanceType.MOCK as the first parameter will create a mock RentACat object using Mockito.
-		// Which type is the correct choice for this integration test?  I'll leave it up to you.  The answer is in the Unit Testing Part 2 lecture. :)
+		// 1. Create a new RentACat object and assign to r using a call to
+		// RentACat.createInstance(InstanceType).
+		// Passing InstanceType.IMPL as the first parameter will create a real RentACat
+		// object using your RentACatImpl implementation.
+		// Passing InstanceType.MOCK as the first parameter will create a mock RentACat
+		// object using Mockito.
+		// Which type is the correct choice for this integration test? I'll leave it up
+		// to you. The answer is in the Unit Testing Part 2 lecture. :)
 		// TODO: Fill in
-		
+
 		r = RentACat.createInstance(InstanceType.IMPL);
 
-		// 2. Create a Cat with ID 1 and name "Jennyanydots", assign to c1 using a call to Cat.createInstance(InstanceType, int, String).
-		// Passing InstanceType.IMPL as the first parameter will create a real cat using your CatImpl implementation.
-		// Passing InstanceType.MOCK as the first parameter will create a mock cat using Mockito.
-		// Which type is the correct choice for this integration test?  Again, I'll leave it up to you.
+		// 2. Create a Cat with ID 1 and name "Jennyanydots", assign to c1 using a call
+		// to Cat.createInstance(InstanceType, int, String).
+		// Passing InstanceType.IMPL as the first parameter will create a real cat using
+		// your CatImpl implementation.
+		// Passing InstanceType.MOCK as the first parameter will create a mock cat using
+		// Mockito.
+		// Which type is the correct choice for this integration test? Again, I'll leave
+		// it up to you.
 		// TODO: Fill in
-		
+
 		c1 = Cat.createInstance(InstanceType.IMPL, 1, "Jennyanydots");
 
-		// 3. Create a Cat with ID 2 and name "Old Deuteronomy", assign to c2 using a call to Cat.createInstance(InstanceType, int, String).
+		// 3. Create a Cat with ID 2 and name "Old Deuteronomy", assign to c2 using a
+		// call to Cat.createInstance(InstanceType, int, String).
 		// TODO: Fill in
 
 		c2 = Cat.createInstance(InstanceType.IMPL, 2, "Old Deuteronomy");
 
-		// 4. Create a Cat with ID 3 and name "Mistoffelees", assign to c3 using a call to Cat.createInstance(InstanceType, int, String).
+		// 4. Create a Cat with ID 3 and name "Mistoffelees", assign to c3 using a call
+		// to Cat.createInstance(InstanceType, int, String).
 		// TODO: Fill in
-		
+
 		c3 = Cat.createInstance(InstanceType.IMPL, 3, "Mistoffelees");
 
 		// 5. Redirect system output from stdout to the "out" stream
 		// First, make a back up of System.out (which is the stdout to the console)
 		stdout = System.out;
 		// Second, update System.out to the PrintStream created from "out"
-		// TODO: Fill in.  Refer to the textbook chapter 14.6 on Testing System Output.
+		// TODO: Fill in. Refer to the textbook chapter 14.6 on Testing System Output.
 		System.setOut(new PrintStream(out));
 
 	}
@@ -101,25 +112,25 @@ public class RentACatIntegrationTest {
 	 * </pre>
 	 * 
 	 * Hint: You will need to use Java reflection to invoke the private getCat(int)
-	 * method. efer to the Unit Testing Part 1 lecture and the textbook appendix 
-	 * hapter on using reflection on how to do this.  Please use r.getClass() to get
+	 * method. efer to the Unit Testing Part 1 lecture and the textbook appendix
+	 * hapter on using reflection on how to do this. Please use r.getClass() to get
 	 * the class object of r instead of hardcoding it as RentACatImpl.
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
 	 */
 	@Test
-	public void testGetCatNullNumCats0() throws Exception {
+	public void testGetCatNullNumCats0() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		// TODO: Fill in
-		
-		Class<?> r1 = r.getClass();
-		try {
-			Method m = RentACatImpl.class.getDeclaredMethod("getCat");
-			m.setAccessible(true);
-			Object returnvalue = m.invoke(r1, 2);
-			assertNull(returnvalue);
-			assertEquals("Invalid cat ID." + newline, out.toString());
-		}
-		catch (Exception e) {
-			fail();
-		}
+
+		Method m = RentACatImpl.class.getDeclaredMethod("getCat", int.class);
+		m.setAccessible(true);
+		Object returnvalue = m.invoke(r, 2);
+		assertNull(returnvalue);
+		assertEquals("Invalid cat ID." + newline, out.toString());
+
 	}
 
 	/**
@@ -133,29 +144,29 @@ public class RentACatIntegrationTest {
 	 * </pre>
 	 * 
 	 * Hint: You will need to use Java reflection to invoke the private getCat(int)
-	 * method. efer to the Unit Testing Part 1 lecture and the textbook appendix 
-	 * hapter on using reflection on how to do this.  Please use r.getClass() to get
+	 * method. efer to the Unit Testing Part 1 lecture and the textbook appendix
+	 * hapter on using reflection on how to do this. Please use r.getClass() to get
 	 * the class object of r instead of hardcoding it as RentACatImpl.
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
 	 */
 	@Test
-	public void testGetCatNumCats3() throws Exception {
+	public void testGetCatNumCats3() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		// TODO: Fill in
-		
-		Class<?> r1 = r.getClass();
+
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
-		try {
-			Method m = RentACatImpl.class.getDeclaredMethod("getCat");
-			m.setAccessible(true);
-			Object returnvalue = m.invoke(r1, 2);
-			assertNotNull(returnvalue);
-			Cat returnedCat = (Cat) returnvalue;
-			assertEquals(2, returnedCat.getId());
-		}
-		catch (Exception e) {
-			fail();
-		}
+
+		Method m = RentACatImpl.class.getDeclaredMethod("getCat", int.class);
+		m.setAccessible(true);
+		Object returnvalue = m.invoke(r, 2);
+		assertNotNull(returnvalue);
+		Cat returnedCat = (Cat) returnvalue;
+		assertEquals(2, returnedCat.getId());
 	}
 
 	/**
@@ -224,7 +235,7 @@ public class RentACatIntegrationTest {
 	@Test
 	public void testRenameNumCat3() {
 		// TODO: Fill in
-		
+
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
@@ -246,7 +257,7 @@ public class RentACatIntegrationTest {
 	@Test
 	public void testRentCatNumCats3() {
 		// TODO: Fill in
-		
+
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
@@ -270,7 +281,7 @@ public class RentACatIntegrationTest {
 	@Test
 	public void testRentCatFailureNumCats3() {
 		// TODO: Fill in
-		
+
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
@@ -278,7 +289,7 @@ public class RentACatIntegrationTest {
 		String before = out.toString();
 		assertFalse(r.rentCat(2));
 		String after = out.toString();
-        String newOutput = after.substring(before.length());
+		String newOutput = after.substring(before.length());
 		assertEquals("Sorry, Old Deuteronomy is not here!" + newline, newOutput);
 	}
 
@@ -305,7 +316,7 @@ public class RentACatIntegrationTest {
 		String before = out.toString();
 		assertTrue(r.returnCat(2));
 		String after = out.toString();
-        String newOutput = after.substring(before.length());
+		String newOutput = after.substring(before.length());
 		assertEquals("Welcome back, Old Deuteronomy!" + newline, newOutput);
 	}
 
@@ -323,7 +334,7 @@ public class RentACatIntegrationTest {
 	@Test
 	public void testReturnFailureCatNumCats3() {
 		// TODO: Fill in
-		
+
 		r.addCat(c1);
 		r.addCat(c2);
 		r.addCat(c3);
